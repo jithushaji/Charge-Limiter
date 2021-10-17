@@ -3,10 +3,6 @@ from tkinter import *
 
 def Chrg_lmt():
     lmt= str(enter.get())
-    power_cfg = open("/sys/class/power_supply/BAT0/charge_control_end_threshold", "r")
-    print("Current Charge Threshold:")
-
-    print(power_cfg.read())
     power_cfg = open("/sys/class/power_supply/BAT0/charge_control_end_threshold", "w")
     print("Updating Threshold.....")
     power_cfg.write(lmt);
@@ -32,7 +28,9 @@ root=Tk()
 root.geometry('240x90')
 root.title('Charge Limiter')
 
-enter=IntVar(value = 60)
+power_cfg = open("/sys/class/power_supply/BAT0/charge_control_end_threshold", "r")
+pwr_val=int(power_cfg.read())
+enter=IntVar(value = pwr_val)
 
 label=Label(root,text="Set Limit",bg='skyblue',fg='red').grid(row=2,column=1)
 
